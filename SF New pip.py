@@ -44,11 +44,14 @@ modules = {
     "selenium": "selenium",
     "python-cfonts": "cfonts",
     "pycryptodome": "Crypto",
+    "pycryptodomex": "Cryptodome",
     "fake_useragent": "fake_useragent",
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
     "python-telegram-bot": "telegram",
-    "pystyle": "pystyle"
+    "pystyle": "pystyle",
+    "httpx": "httpx",
+    "httpx[http2]": "httpx"
 }
 
 already_installed = []
@@ -80,7 +83,6 @@ for pkg, imp in modules.items():
     ensure_installed(pkg, imp)
     time.sleep(0.3)
 
-#FINAL REPORT
 print(Fore.CYAN + "\n════════ FINAL REPORT ════════\n")
 
 print(Fore.GREEN + "✅ ALREADY INSTALLED MODULES:\n")
@@ -102,4 +104,4 @@ if failed_modules:
 else:
     print(Fore.GREEN + "🎉 DOWNLOAD ALL MODELS BY SF 🦅")
 
-print(Fore.CYAN + "\n════════ PROGRAM FINISHED ════════  \n")
+print(Fore.CYAN + "\n════════ PROGRAM FINISHED ════════\n")
