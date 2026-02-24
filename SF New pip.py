@@ -4,8 +4,13 @@ import os
 import importlib.util
 import time
 
-def auto_install(package):
-    subprocess.call([sys.executable, "-m", "pip", "install", package])
+
+def auto_install(package, upgrade=False):
+    command = [sys.executable, "-m", "pip", "install"]
+    if upgrade:
+        command.append("--upgrade")
+    command.append(package)
+    subprocess.call(command)
 
 try:
     from colorama import Fore, init
@@ -13,22 +18,24 @@ except:
     auto_install("colorama")
     from colorama import Fore, init
 
+
 try:
     import pyfiglet
 except:
     auto_install("pyfiglet")
     import pyfiglet
 
+
 init(autoreset=True)
 os.system('cls' if os.name == 'nt' else 'clear')
 
-# Banner
 banner = pyfiglet.figlet_format("SF MODULES", font="slant")
 print(Fore.CYAN + banner)
 print(Fore.MAGENTA + "🔥 FINAL SMART INSTALLER 🔥\n")
 print(Fore.YELLOW + f"🐍 Python Version ➜ {sys.version.split()[0]}\n")
 
-# Module List
+
+
 modules = {
     "telebot": "telebot",
     "telegram": "telegram",
@@ -49,9 +56,7 @@ modules = {
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
     "python-telegram-bot": "telegram",
-    "pystyle": "pystyle",
-    "httpx": "httpx",
-    "httpx[http2]": "httpx"
+    "pystyle": "pystyle"
 }
 
 already_installed = []
@@ -63,9 +68,7 @@ def ensure_installed(package, import_name):
     if importlib.util.find_spec(import_name) is None:
         print(Fore.YELLOW + f"\n[➜] Installing {package}...\n")
 
-        subprocess.call(
-            [sys.executable, "-m", "pip", "install", package]
-        )
+        auto_install(package)
 
         if importlib.util.find_spec(import_name) is None:
             print(Fore.RED + f"[✗] FAILED → {package}\n")
@@ -77,11 +80,25 @@ def ensure_installed(package, import_name):
         print(Fore.GREEN + f"[✓] ALREADY INSTALLED → {package}")
         already_installed.append(package)
 
+
 print(Fore.BLUE + "════════ CHECKING MODULES ════════\n")
 
 for pkg, imp in modules.items():
     ensure_installed(pkg, imp)
-    time.sleep(0.3)
+    time.sleep(0.2)
+
+
+
+print(Fore.YELLOW + "\n[➜] Ensuring httpx with HTTP2 support...\n")
+
+auto_install("httpx[http2]", upgrade=True)
+
+if importlib.util.find_spec("httpx") is not None:
+    print(Fore.GREEN + "[✓] HTTPX with HTTP2 READY\n")
+else:
+    print(Fore.RED + "[✗] HTTPX HTTP2 INSTALL FAILED\n")
+    failed_modules.append("httpx[http2]")
+
 
 print(Fore.CYAN + "\n════════ FINAL REPORT ════════\n")
 
@@ -102,6 +119,6 @@ if failed_modules:
     for mod in failed_modules:
         print(Fore.RED + f" - {mod}")
 else:
-    print(Fore.GREEN + "🎉 DOWNLOAD ALL MODELS BY SF 🦅")
+    print(Fore.GREEN + "🎉 ALL MODULES INSTALLED SUCCESSFULLY 🦅")
 
 print(Fore.CYAN + "\n════════ PROGRAM FINISHED ════════\n")
