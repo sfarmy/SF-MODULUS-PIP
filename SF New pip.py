@@ -37,26 +37,48 @@ print(Fore.YELLOW + f"🐍 Python Version ➜ {sys.version.split()[0]}\n")
 
 
 modules = {
-    "telebot": "telebot",
-    "telegram": "telegram",
-    "stdiomask": "stdiomask",
-    "user_agent": "user_agent",
-    "instaloader": "instaloader",
-    "requests": "requests",
-    "rich": "rich",
+
+    # Telegram
+    "pyTelegramBotAPI": "telebot",
+    "python-telegram-bot": "telegram",
+
+    # CLI / Design
+    "python-cfonts": "cfonts",
     "pyfiglet": "pyfiglet",
     "colorama": "colorama",
-    "instagrapi": "instagrapi",
-    "generate_user_agent": "generate_user_agent",
+    "pystyle": "pystyle",
+
+    # Web / Requests
+    "requests": "requests",
     "selenium": "selenium",
-    "python-cfonts": "cfonts",
+    "beautifulsoup4": "bs4",
+    "pysocks": "socks",
+    "curl2pyreqs": "curl2pyreqs",
+
+    # User Agents
+    "user_agent": "user_agent",
+    "fake_useragent": "fake_useragent",
+    "generate_user_agent": "generate_user_agent",
+
+    # Crypto
     "pycryptodome": "Crypto",
     "pycryptodomex": "Cryptodome",
-    "fake_useragent": "fake_useragent",
+
+    # Instagram
+    "instaloader": "instaloader",
+    "instagrapi": "instagrapi",
+    "InstagramAPI": "InstagramAPI",
+
+    # Youtube
+    "youtube_dl": "youtube_dl",
+    "pafy": "pafy",
+
+    # Extra
+    "rich": "rich",
+    "stdiomask": "stdiomask",
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
-    "python-telegram-bot": "telegram",
-    "pystyle": "pystyle"
+    "Topython": "Topython"
 }
 
 already_installed = []
