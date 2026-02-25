@@ -64,14 +64,12 @@ modules = {
     "pycryptodome": "Crypto",
     "pycryptodomex": "Cryptodome",
 
-    # Instagram
-    "instaloader": "instaloader",
-    "instagrapi": "instagrapi",
-    "InstagramAPI": "InstagramAPI",
-
     # Youtube
     "youtube_dl": "youtube_dl",
     "pafy": "pafy",
+
+    # Faker 
+    "Faker": "faker",
 
     # Extra
     "rich": "rich",
@@ -79,7 +77,13 @@ modules = {
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
     "Topython": "Topython"
+    
+    # Instagram
+    "instaloader": "instaloader",
+    "instagrapi": "instagrapi",
+    "InstagramAPI": "InstagramAPI",
 }
+
 
 already_installed = []
 newly_installed = []
