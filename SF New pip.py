@@ -48,7 +48,7 @@ modules = {
     "colorama": "colorama",
     "pystyle": "pystyle",
 
-    # Web / Requests
+    # Web
     "requests": "requests",
     "selenium": "selenium",
     "beautifulsoup4": "bs4",
@@ -68,7 +68,7 @@ modules = {
     "youtube_dl": "youtube_dl",
     "pafy": "pafy",
 
-    # Faker 
+    # Faker
     "Faker": "faker",
 
     # Extra
@@ -76,12 +76,12 @@ modules = {
     "stdiomask": "stdiomask",
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
-    "Topython": "Topython"
-    
-    # Instagram
+    "Topython": "Topython",
+
+    # Instagram 
     "instaloader": "instaloader",
     "instagrapi": "instagrapi",
-    "InstagramAPI": "InstagramAPI",
+    "InstagramAPI": "InstagramAPI"
 }
 
 
