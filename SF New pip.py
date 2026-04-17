@@ -58,7 +58,7 @@ modules = {
     # User Agents
     "user_agent": "user_agent",
     "fake_useragent": "fake_useragent",
-    "generate_user_agent": "generate_user_agent",
+ 
 
     # Crypto
     "pycryptodome": "Crypto",
@@ -80,8 +80,8 @@ modules = {
 
     # Instagram 
     "instaloader": "instaloader",
-    "instagrapi": "instagrapi",
-    "InstagramAPI": "InstagramAPI"
+    #neww
+     "brotli": "brotli",
 }
 
 
