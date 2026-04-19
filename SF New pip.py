@@ -5,12 +5,32 @@ import importlib.util
 import time
 
 
-def auto_install(package, upgrade=False):
-    command = [sys.executable, "-m", "pip", "install"]
+def auto_install(package, upgrade=False, force=False):
+    command = [sys.executable, "-m", "pip", "install", "--no-cache-dir"]
+
     if upgrade:
         command.append("--upgrade")
+
+    if force:
+        command.append("--force-reinstall")
+
     command.append(package)
-    subprocess.call(command)
+
+    try:
+        subprocess.check_call(command)
+        return True
+    except:
+        return False
+
+
+def install_with_retry(package, import_name, retries=2):
+    for i in range(retries):
+        print(f"🔁 Retry {i+1} for {package}...")
+        if auto_install(package, force=True):
+            if importlib.util.find_spec(import_name):
+                return True
+    return False
+
 
 try:
     from colorama import Fore, init
@@ -31,57 +51,44 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 banner = pyfiglet.figlet_format("SF MODULES", font="slant")
 print(Fore.CYAN + banner)
-print(Fore.MAGENTA + "🔥 FINAL SMART INSTALLER 🔥\n")
-print(Fore.YELLOW + f"🐍 Python Version ➜ {sys.version.split()[0]}\n")
-
+print(Fore.MAGENTA + "🔥 FINAL SMART INSTALLER PRO 🔥\n")
+print(Fore.YELLOW + f"🐍 Python ➜ {sys.version.split()[0]}\n")
 
 
 modules = {
-
-    # Telegram
     "pyTelegramBotAPI": "telebot",
     "python-telegram-bot": "telegram",
 
-    # CLI / Design
     "python-cfonts": "cfonts",
     "pyfiglet": "pyfiglet",
     "colorama": "colorama",
     "pystyle": "pystyle",
 
-    # Web
     "requests": "requests",
     "selenium": "selenium",
     "beautifulsoup4": "bs4",
     "pysocks": "socks",
     "curl2pyreqs": "curl2pyreqs",
 
-    # User Agents
     "user_agent": "user_agent",
     "fake_useragent": "fake_useragent",
- 
 
-    # Crypto
-    "pycryptodome": "Crypto",
-    "pycryptodomex": "Cryptodome",
+    # 🔥 FORCE FIXED VERSIONS
+    "pycryptodome==3.19.0": "Crypto",
+    "pycryptodomex==3.19.0": "Cryptodome",
+    "brotli": "brotli",
 
-    # Youtube
     "youtube_dl": "youtube_dl",
     "pafy": "pafy",
-
-    # Faker
     "Faker": "faker",
 
-    # Extra
     "rich": "rich",
     "stdiomask": "stdiomask",
     "asmix": "asmix",
     "MedoSigner": "MedoSigner",
     "Topython": "Topython",
 
-    # Instagram 
     "instaloader": "instaloader",
-    #neww
-     "brotli": "brotli",
 }
 
 
@@ -89,19 +96,26 @@ already_installed = []
 newly_installed = []
 failed_modules = []
 
+
 def ensure_installed(package, import_name):
 
     if importlib.util.find_spec(import_name) is None:
         print(Fore.YELLOW + f"\n[➜] Installing {package}...\n")
 
-        auto_install(package)
+        success = auto_install(package)
 
-        if importlib.util.find_spec(import_name) is None:
-            print(Fore.RED + f"[✗] FAILED → {package}\n")
-            failed_modules.append(package)
-        else:
+        if not success or importlib.util.find_spec(import_name) is None:
+            print(Fore.RED + f"[!] Retrying {package} with force...\n")
+
+            success = install_with_retry(package, import_name)
+
+        if success:
             print(Fore.GREEN + f"[✓] INSTALLED → {package}\n")
             newly_installed.append(package)
+        else:
+            print(Fore.RED + f"[✗] FAILED → {package}\n")
+            failed_modules.append(package)
+
     else:
         print(Fore.GREEN + f"[✓] ALREADY INSTALLED → {package}")
         already_installed.append(package)
@@ -111,40 +125,26 @@ print(Fore.BLUE + "════════ CHECKING MODULES ══════�
 
 for pkg, imp in modules.items():
     ensure_installed(pkg, imp)
-    time.sleep(0.2)
+    time.sleep(0.1)
 
 
-
-print(Fore.YELLOW + "\n[➜] Ensuring httpx with HTTP2 support...\n")
-
+# 🔥 HTTPX FIX
+print(Fore.YELLOW + "\n[➜] Ensuring httpx HTTP2...\n")
 auto_install("httpx[http2]", upgrade=True)
-
-if importlib.util.find_spec("httpx") is not None:
-    print(Fore.GREEN + "[✓] HTTPX with HTTP2 READY\n")
-else:
-    print(Fore.RED + "[✗] HTTPX HTTP2 INSTALL FAILED\n")
-    failed_modules.append("httpx[http2]")
 
 
 print(Fore.CYAN + "\n════════ FINAL REPORT ════════\n")
 
-print(Fore.GREEN + "✅ ALREADY INSTALLED MODULES:\n")
+print(Fore.GREEN + "✅ ALREADY INSTALLED:\n")
 for mod in already_installed:
-    print(Fore.GREEN + f" - {mod}")
+    print(" -", mod)
 
-print(Fore.CYAN + "\n--------------------------------\n")
-
-print(Fore.YELLOW + "🆕 NEWLY INSTALLED MODULES:\n")
+print("\n🆕 NEWLY INSTALLED:\n")
 for mod in newly_installed:
-    print(Fore.YELLOW + f" - {mod}")
+    print(" -", mod)
 
-print(Fore.CYAN + "\n--------------------------------\n")
-
-if failed_modules:
-    print(Fore.RED + "❌ FAILED MODULES:\n")
-    for mod in failed_modules:
-        print(Fore.RED + f" - {mod}")
-else:
-    print(Fore.GREEN + "🎉 ALL MODULES INSTALLED SUCCESSFULLY 🦅")
+print("\n❌ FAILED MODULES:\n")
+for mod in failed_modules:
+    print(" -", mod)
 
 print(Fore.CYAN + "\n════════ PROGRAM FINISHED ════════\n")
